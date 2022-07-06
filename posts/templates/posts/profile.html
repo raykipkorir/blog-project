@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Profile
+{% endblock title %}
+
+
+{% block content %}
+
+   <h3><ins>User Information</ins></h3>
+   User: {{ profile.user|capfirst }}<br>
+
+   {% if profile.bio %}
+   Bio: {{ profile.bio }}<br>
+   {% endif %}
+   
+   {% if profile.url %}
+   Url: {{ profile.url }}<br>
+   {% endif %}
+
+   {% if user.email_displayed %}
+   Email: {{ user.email }}<br>
+   {% endif %}
+
+   <a  href = "{% url 'posts:edit_profile' user.profile.id %}"><button class = "btn btn-primary">Edit Profile</button></a><br><br>
+
+   <a  href = "{% url 'posts:create_post'%}"><button class = "btn btn-primary">Create Post</button></a><br>
+   <h4><ins>Your Posts</ins></h4>
+   {% for post in posts %}
+
+   <div>   
+
+      {% if post.date_updated != post.date_created%}
+      <i>(edited)</i><br>
+      Title: <strong>{{ post.title }}</strong><br>
+      {% else %}
+      Title: <strong>{{ post.title }}</strong><br>
+      {% endif %}
+       
+      <ins>Content</ins><br>
+       {{ post.content }}<br>
+       Date Updated: <ins>{{ post.date_updated }}</ins><br>
+       Date Created: <ins>{{ post.date_created }}</ins><br>
+       <a href="{% url 'posts:edit_post' post.id %}">Update post</a>
+       <a href="{% url 'posts:delete_post' post.id %}" class="link-danger">Delete Post</a><br><br>
+    </div>  
+      
+   {% endfor %}
+
+{% endblock content %}

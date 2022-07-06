@@ -1,0 +1,54 @@
+{% url 'posts:home' as home %}
+{% url 'users:logout' as logout %}
+{% url 'users:login' as login %}
+{% url 'users:signup' as signup %}
+{% url 'users:change_password' as change_password %}
+{% url 'posts:profile' user.profile.id as profile %}
+
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{ home }}">Medium</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{home}}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{{profile}}">Profile</a></li>
+              <li><a class="dropdown-item" href="{{ change_password}}">Change Password</a></li>
+              <li><a class="dropdown-item" href="{% url 'users:edit_user' user.id %}">Update Account</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{{logout}}">Log out</a></li>
+            </ul>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link active" href="{{ signup }}">GET STARTED</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{{ login }}">Log in </a>
+          </li>
+          {% endif %}
+          
+        </ul>
+        
+        <span class="navbar-text">
+           Welcome {{user}}
+        </span>
+      </div>
+    </div>
+  </nav>

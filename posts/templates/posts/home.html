@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock title %}
+
+
+{% block content %}
+   
+   <h2>Latest Blogs</h2>
+         {% for post in latest_posts %}
+         
+      <div>   
+        {% if post.date_updated != post.date_created%}
+        <i>(edited)</i><br>
+        <strong>{{ post.title }}</strong><br>
+        {% else %}
+        <strong>{{ post.title }}</strong><br>
+        {% endif %}
+         
+         {{ post.content }}<br>
+         {{ post.updated }}
+         <i>writer-->{{ post.user}}</i> <br><br>
+      </div>   
+         {% endfor %}
+
+
+{% endblock content %}
