@@ -3,7 +3,7 @@
 {% url 'users:login' as login %}
 {% url 'users:signup' as signup %}
 {% url 'users:change_password' as change_password %}
-{% url 'posts:profile' user.profile.id as profile %}
+{% url 'posts:profile' user.username as profile %}
 
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">

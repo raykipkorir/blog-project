@@ -43,6 +43,7 @@ class ProfileView(LoginRequiredMixin,DetailView):
     model = Profile
     context_object_name = "profile"
     template_name = "posts/profile.html"
+    slug_field = "user__username"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
