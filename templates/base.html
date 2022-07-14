@@ -15,10 +15,12 @@
 </head>
 <body>
     {% include "navbar.html" %}
- 
     
     <div class="container">
-     {% block content %}
+
+    {% include "messages.html" %}
+    
+    {% block content %}
     
     {% endblock content %}   
     </div>

@@ -25,7 +25,11 @@ Profile
    <a  href = "{% url 'posts:edit_profile' user.profile.id %}"><button class = "btn btn-primary">Edit Profile</button></a><br><br>
 
    <a  href = "{% url 'posts:create_post'%}"><button class = "btn btn-primary">Create Post</button></a><br>
+   {% if posts %}
    <h4><ins>Your Posts</ins></h4>
+   {% else %}
+   <h4><ins>No Posts</ins></h4>
+   {% endif %}
    {% for post in posts %}
 
    <div>   

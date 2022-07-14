@@ -1,4 +1,3 @@
-from distutils.log import Log
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
@@ -6,6 +5,8 @@ from posts.models import BlogPost, Profile
 from .forms import PostForm,ProfileForm
 from django.views.generic import CreateView,ListView,FormView,DetailView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 
 
 #posts model
@@ -14,9 +15,10 @@ class CreatePost(LoginRequiredMixin,FormView):
     template_name = "posts/blogpost_create.html"
     success_url = reverse_lazy("posts:home")
 
-    def form_valid(self, form):
+    def form_valid(self,form ):
         form.instance.user = self.request.user
         form.save()
+        messages.success(self.request, "Post created successfully")
         return super().form_valid(form)
 
 
@@ -27,16 +29,17 @@ class HomeView(ListView):
     ordering = ['-date_updated']
 
 
-class EditPostView(LoginRequiredMixin,UpdateView):
+class EditPostView(SuccessMessageMixin, LoginRequiredMixin,UpdateView):
     form_class = PostForm
     model = BlogPost
     template_name = "posts/update_post.html"
+    success_message = "Post edited successfully"
 
-
-class DeletePost(DeleteView):
+class DeletePost(SuccessMessageMixin, DeleteView):
     model = BlogPost
     template_name = "posts/delete_post.html"
-
+    success_url = reverse_lazy("posts:home")
+    success_message = "Post deleted successfully"
 
 #profile model
 class ProfileView(LoginRequiredMixin,DetailView):
@@ -50,10 +53,11 @@ class ProfileView(LoginRequiredMixin,DetailView):
         context["posts"] = BlogPost.objects.filter(user = self.request.user).order_by("-date_updated")
         return context
 
-class EditProfileView(LoginRequiredMixin,UpdateView):
+class EditProfileView(SuccessMessageMixin, LoginRequiredMixin,UpdateView):
     model = Profile
     form_class = ProfileForm
     template_name = "posts/edit_profile.html"
+    success_message = "Profile updated successfully"
 
 
 

@@ -10,7 +10,7 @@ Delete User
 <form action="" method="post">
     {% csrf_token %}
     <p>Are you sure you want to delete your account ? This action cannot be undone</p>
-    <input type="submit" value = "Delete" class = "btn btn-danger"><a href="{% url 'posts:profile' user.profile.id%}">Cancel</a>
+    <input type="submit" value = "Delete" class = "btn btn-danger"><a href="{% url 'posts:profile' user.username%}">Cancel</a>
 </form>
 
 {% endblock content %}
